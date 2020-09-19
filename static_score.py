@@ -33,7 +33,7 @@ def symptoms_risk(x):
     symptomsLogisticRegr = pickle.load(open("model/symptomsLogReg.pkl", "rb"))
     return symptomsLogisticRegr.predict_proba([x])[0][1]
 
-def static_score(entry):
+def static_score(entry, zip_code, incident, siv, zip_to_fips, minimum, maximum):
     pass
 
 # incident, siv, zip_to_fips, minimum, maximum = init()
