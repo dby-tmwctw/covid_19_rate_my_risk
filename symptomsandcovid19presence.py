@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1PWjI8PFGhudAOhOmR5RNUnvVWQIjZ4nK
 """
 
-import pandas as pd 
+import pandas as pd
 covid_data = pd.read_csv('/content/symptoms.csv')
 
 from sklearn.preprocessing import LabelEncoder
@@ -55,6 +55,6 @@ print(classification_report(y_test, predictions))
 X_test.head(10)
 
 def symptoms_risk(x):
-  symptomsLogisticRegr = pickle.load(open("/content/symptomsLogReg.pkl", "rb"))
+  symptomsLogisticRegr = pickle.load(open("model/symptomsLogReg.pkl", "rb"))
   return symptomsLogisticRegr.predict_proba([x])[0][1]
 symptoms_risk(X_test.loc[5145,:])
