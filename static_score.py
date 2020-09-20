@@ -33,9 +33,62 @@ def symptoms_risk(x):
     symptomsLogisticRegr = pickle.load(open("model/symptomsLogReg.pkl", "rb"))
     return symptomsLogisticRegr.predict_proba([x])[0][1]
 
-def static_score(entry, zip_code, incident, siv, zip_to_fips, minimum, maximum):
-    pass
+def static_score(entry, incident, siv, zip_to_fips, minimum, maximum):
+    loc_score = get_location_score(entry['location']['zipcode'], incident, siv, zip_to_fips, minimum, maximum)
+    symptoms_input = [entry['symptoms']['difficultBreath'], 
+                    entry['symptoms']['fever'],
+                    entry['symptoms']['dryCough'],
+                    entry['symptoms']['soreThroat'],
+                    entry['symptoms']['runnyNose'],
+                    entry['priorDisease']['asthma'],
+                    entry['priorDisease']['chronicLungDisease'],
+                    entry['symptoms']['headache'],
+                    entry['priorDisease']['heartDisease'],
+                    entry['priorDisease']['diabetes'],
+                    entry['priorDisease']['hypertension'],
+                    entry['symptoms']['fatigue'],
+                    entry['priorDisease']['gastrointestinal'],
+                    entry['contact']['abroadTravel'],
+                    entry['contact']['contactCovid19'],
+                    entry['contact']['largeGathering'],
+                    entry['contact']['visitPublicExposedPlaces'],
+                    0,
+                    # entry['contact']['faimlyInExposedPlaces'], # Missing
+                    entry['contact']['wearMask'],
+                    entry['contact']['sanitizationFromMarket']]
+
+    symptoms_score = symptoms_risk(symptoms_input)
+
+    return 70 * symptoms_score + loc_score
+
+    # precondition_input = [entry['basicInfo']['gender'], 
+    #                 entry['symptoms']['fever'],
+    #                 entry['symptoms']['dryCough'],
+    #                 entry['symptoms']['soreThroat'],
+    #                 entry['symptoms']['runningNose'],
+    #                 entry['priorDisease']['asthema'],
+    #                 entry['priorDisease']['chronicLungDisease'],
+    #                 entry['symptoms']['headache'],
+    #                 entry['priorDisease']['heartDisease'],
+    #                 entry['priorDisease']['hypertension'],
+    #                 entry['symptoms']['fatigue'],
+    #                 entry['priorDisease']['gastrointestinal'],
+    #                 entry['contact']['abroadTravel'],
+    #                 entry['contact']['contactCovid19'],
+    #                 entry['contact']['largeGathering'],
+    #                 entry['contact']['visitPublicExposedPlaces'],
+    #                 entry['contact']['faimlyInExposedPlaces'], # Missing
+    #                 entry['contact']['wearMask'],
+    #                 entry['contact']['sanitizationFromMarket']]
+
 
 # incident, siv, zip_to_fips, minimum, maximum = init()
 #
 # print(get_score(77025, incident, siv, zip_to_fips, minimum, maximum))
+
+import json
+with open('./example.json', 'r') as f:
+    entry = json.load(f)
+
+incident, siv, zip_to_fips, minimum, maximum = init()
+print(static_score(entry, incident, siv, zip_to_fips, minimum, maximum))

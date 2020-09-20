@@ -1,0 +1,50 @@
+{
+    "activeStep": 0,
+    "location": {
+      "zipcode": 77005
+    },
+    "basicInfo": {
+      "age": 50,
+      "gender": 1,
+      "smoking": 1,
+      "preganancy": 1
+    },
+    "priorDisease": {
+      "pneumonia": 0,
+      "diabetes": 1,
+      "copd": 1,
+      "asthma": 0,
+      "immunosuppression": 0,
+      "hypertension": 0,
+      "cardiovascular": 0,
+      "obesity": 0,
+      "chronicKidneyDisease": 0,
+      "chronicLungDisease": 0,
+      "gastrointestinal": 0,
+      "heartDisease": 0,
+      "otherDiseases": 0
+    },
+    "contact": {
+      "abroadTravel": 0,
+      "largeGathering": 0,
+      "contactCovid19": 1,
+      "wearMask": 0,
+      "visitPublicExposedPlaces": 0,
+      "sanitizationFromMarket": 0
+    },
+    "symptoms": {
+      "fever": 1,
+      "fatigue": 0,
+      "dryCough": 0,
+      "difficultBreath": 0,
+      "runnyNose": 0,
+      "soreThroat": 0,
+      "headache": 0
+    },
+    "steps": [
+      "Location",
+      "Basic Infomation",
+      "Prior Disease(Medical Problems) History",
+      "Previous contacts with COVID-19 patients"
+    ]
+  }
