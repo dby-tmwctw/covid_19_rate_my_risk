@@ -28,9 +28,10 @@
       "abroadTravel": 0,
       "largeGathering": 0,
       "contactCovid19": 1,
-      "wearMask": 0,
+      "notWearMask": 0,
       "visitPublicExposedPlaces": 0,
-      "sanitizationFromMarket": 0
+      "sanitizationFromMarket": 0,
+      "familyExposed": 0
     },
     "symptoms": {
       "fever": 1,

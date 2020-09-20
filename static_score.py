@@ -52,43 +52,40 @@ def static_score(entry, incident, siv, zip_to_fips, minimum, maximum):
                     entry['contact']['contactCovid19'],
                     entry['contact']['largeGathering'],
                     entry['contact']['visitPublicExposedPlaces'],
-                    0,
-                    # entry['contact']['faimlyInExposedPlaces'], # Missing
-                    entry['contact']['wearMask'],
+                    entry['contact']['familyExposed'],
+                    not entry['contact']['notWearMask'],
                     entry['contact']['sanitizationFromMarket']]
 
-    symptoms_score = symptoms_risk(symptoms_input)
+    symptoms_score = symptoms_risk([int(item) for item in symptoms_input])
 
-    return 70 * symptoms_score + loc_score
+    precondition_input = [entry['basicInfo']['gender'], 
+                    entry['priorDisease']['pneumonia'],
+                    entry['basicInfo']['age'],
+                    entry['basicInfo']['preganancy'],
+                    entry['priorDisease']['diabetes'],
+                    entry['priorDisease']['copd'],
+                    entry['priorDisease']['asthma'],
+                    entry['priorDisease']['immunosuppression'],
+                    entry['priorDisease']['hypertension'],
+                    entry['priorDisease']['otherDiseases'],
+                    entry['priorDisease']['cardiovascular'],
+                    entry['priorDisease']['obesity'],
+                    entry['priorDisease']['chronicKidneyDisease'],
+                    entry['basicInfo']['smoking'],
+                    entry['contact']['contactCovid19']]
 
-    # precondition_input = [entry['basicInfo']['gender'], 
-    #                 entry['symptoms']['fever'],
-    #                 entry['symptoms']['dryCough'],
-    #                 entry['symptoms']['soreThroat'],
-    #                 entry['symptoms']['runningNose'],
-    #                 entry['priorDisease']['asthema'],
-    #                 entry['priorDisease']['chronicLungDisease'],
-    #                 entry['symptoms']['headache'],
-    #                 entry['priorDisease']['heartDisease'],
-    #                 entry['priorDisease']['hypertension'],
-    #                 entry['symptoms']['fatigue'],
-    #                 entry['priorDisease']['gastrointestinal'],
-    #                 entry['contact']['abroadTravel'],
-    #                 entry['contact']['contactCovid19'],
-    #                 entry['contact']['largeGathering'],
-    #                 entry['contact']['visitPublicExposedPlaces'],
-    #                 entry['contact']['faimlyInExposedPlaces'], # Missing
-    #                 entry['contact']['wearMask'],
-    #                 entry['contact']['sanitizationFromMarket']]
+    precondition_score = precondition_risk([int(item) for item in precondition_input])
+
+    return 20 * precondition_score + 50 * symptoms_score + loc_score 
 
 
 # incident, siv, zip_to_fips, minimum, maximum = init()
 #
 # print(get_score(77025, incident, siv, zip_to_fips, minimum, maximum))
 
-import json
-with open('./example.json', 'r') as f:
-    entry = json.load(f)
+# import json
+# with open('./example.json', 'r') as f:
+#     entry = json.load(f)
 
-incident, siv, zip_to_fips, minimum, maximum = init()
-print(static_score(entry, incident, siv, zip_to_fips, minimum, maximum))
+# incident, siv, zip_to_fips, minimum, maximum = init()
+# print(static_score(entry, incident, siv, zip_to_fips, minimum, maximum))
